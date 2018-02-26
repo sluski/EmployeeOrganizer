@@ -1,0 +1,32 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui" 
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+    <h:head>
+    </h:head>
+    <body>
+        <ui:composition>
+            <h:form>
+                <p:dialog id="complete_dlg" widgetVar="complete_dlg" dynamic="true" resizable="false" header="Complete personal details">
+                    <h:panelGrid columns="2" cellpadding="5" >
+                        <h:outputLabel class="login_buttons" value="First name:" />
+                        <h:inputText class="login_input" value="#{employeeBin.employee.firstName}"/>
+                        <h:outputLabel class="login_buttons" value="Last name:" />
+                        <h:inputText class="login_input" value="#{employeeBin.employee.lastName}"/>
+                        <h:outputLabel class="login_buttons" value="Email:" />
+                        <h:inputText class="login_input" disabled="true" value="#{employeeBin.loggedUser.email}"/>
+                        <h:outputLabel class="login_buttons" value="Reward:" />
+                        <h:inputText class="login_input" value="#{employeeBin.employee.reward}"/>
+                        <h:outputLabel class="login_buttons" value="Permission:" />
+                        <h:inputText class="login_input" disabled="true" value="#{employeeBin.loggedUser.permissions}"/>
+                    </h:panelGrid>
+                    <div class="login_button">
+                        <h:commandButton value="Complete" action="#{employeeBin.modify()}" />
+                    </div>
+                </p:dialog>
+            </h:form>
+        </ui:composition>
+    </body>
+</html>

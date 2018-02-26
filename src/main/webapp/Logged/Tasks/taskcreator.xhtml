@@ -1,0 +1,83 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui" >
+    <h:head>
+        <title>Manager</title>
+    </h:head>
+    <h:body>
+        <h:form>
+            <p:dataTable selectionMode="single" id="projectsTab" var="project" 
+                         value="#{projectBin.returnAllProjects()}" selection="#{taskBin.newTask.project_id}" rowKey="#{project.id}">
+                    <p:column style="width:16px;text-align:center"/>
+                    <p:column headerText="Name">
+                        <h:outputText value="#{project.name}" />
+                    </p:column>
+                    <p:column headerText="Category">
+                        <h:outputText value="#{project.category}" />
+                    </p:column>
+                    <p:column headerText="Term">
+                        <h:outputText value="#{project.term}" />
+                    </p:column>
+                    <p:column headerText="Priority">
+                        <h:outputText value="#{project.priority}" />
+                    </p:column>
+            </p:dataTable><br/><br/>
+            <p:dataTable id="employeesTab" value="#{employeeBin.returnAllEmployees()}" var="employee" 
+                         rowKey="#{employee.id}" selection="#{taskBin.newTask.employee_id}">
+                <p:column selectionMode="multiple" style="width:16px;text-align:center"/>
+                <p:column headerText="First Name">
+                    <h:outputText value="#{employee.firstName}" />
+                </p:column>
+                <p:column headerText="Last Name">
+                    <h:outputText value="#{employee.lastName}" />
+                </p:column>
+                <p:column headerText="Email">
+                    <h:outputText value="#{employee.email}" />
+                </p:column>
+                <p:column headerText="Reward">
+                    <h:outputText value="#{employee.reward}" />
+                </p:column>
+                <p:column headerText="Tasks">
+                    <p:dataTable id="tasklist" var="task_usr" value="#{employeeBin.tasksList}">
+                        <p:column headerText="Project Id">
+                            <h:outputText value="#{task_usr.taskName}" />
+                        </p:column>
+                        <p:column headerText="Year">
+                            <h:outputText value="#{task_usr.status}" />
+                        </p:column>
+                    </p:dataTable>
+                </p:column>
+            </p:dataTable><br/><br/>
+            Name <h:inputText value="#{taskBin.newTask.taskName}" /><br/><br/>
+            Status: <h:inputText value="#{taskBin.newTask.status}" /><br/><br/>
+            Start Date  <p:calendar value="#{taskBin.newTask.startDate}" pattern="MM/dd/yyyy HH:mm:ss" />
+            End Date  <p:calendar value="#{taskBin.newTask.endDate}" pattern="MM/dd/yyyy HH:mm:ss" />
+            <p:commandButton value="Add Task" update=":#{p:component('employeesTab')}, 
+                             :#{p:component('tasklist')}, :#{p:component('projectsTab')}" actionListener="#{taskBin.createTask()}"/>
+        </h:form>
+        <h:form>
+            <p:dataTable id="taskTab" var="task" value="#{taskBin.returnAllTasks()}" 
+                         selectionMode="single" selection="#{taskBin.selectedTask}" rowKey="#{task.id}">
+                <p:column headerText="Task name:">
+                    <h:outputLabel value="#{task.taskName}" />
+                </p:column>
+                <p:column headerText="Project name:">
+                    <h:outputLabel value="#{task.project_id.name}" />
+                    <h:outputLabel value="#{task.project_id.category}" />
+                </p:column>
+                <p:column headerText="Employees:">
+                    <p:dataTable id="employee_tsk" var="employee_tsk" value="#{task.employee_id}" rowKey="#{employee_tsk.id}">
+                        <p:column>
+                            <h:outputLabel value="#{employee_tsk.firstName}" />
+                            <h:outputLabel value="#{employee_tsk.lastName}" />
+                        </p:column>
+                    </p:dataTable>
+                </p:column>
+            </p:dataTable>
+            <p:commandButton value="Remove" actionListener="#{taskBin.remove()}" update=":#{p:component('taskTab')}" />
+        </h:form>
+    </h:body>
+</html>
+

@@ -1,0 +1,48 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui" 
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+    <h:head>
+        <title>Projects</title>
+    </h:head>
+    <h:body>
+        <ui:include src="./Dialogs/addDialog.xhtml" /> 
+        <ui:include src="./Dialogs/modifyDialog.xhtml" /> 
+        <h:form>
+            <p:commandButton value="Add Employee" action="/secured/Projects/project_logged.xhtml" rendered="#{loggedUsersBin.loggedUser.permissions == 3}"/>
+            <p:commandButton value="Projects" action="/secured/Projects/project_logged.xhtml" rendered="#{loggedUsersBin.loggedUser.permissions > 1}" />
+            <p:commandButton value="Profil" action="/secured/Projects/project_logged.xhtml" />
+            <p:commandButton value="test" action="/secured/Projects/project_logged.xhtml"/>
+            <p:dataTable id="projectsTable" selectionMode="single" editable="true" selection="#{projectBin.selectedProject}" rowKey="#{project.id}" 
+                         var="project" value="#{projectBin.returnAllProjects()}">
+                <p:ajax event="rowSelect" update=":#{p:component('disable_button')}"/>
+                <p:column headerText="Name" sortBy="#{project.name}">
+                    <h:outputText value="#{project.name}" />
+                </p:column>
+                <p:column headerText="Category" sortBy="#{project.category}">
+                    <h:outputText value="#{project.category}" />
+                </p:column>
+                <p:column headerText="Term" sortBy="#{project.term}">
+                    <h:outputText value="#{project.term}" >
+                        <f:convertDateTime pattern="dd-MM-yyyy" />
+                    </h:outputText>
+                </p:column>
+                <p:column headerText="Priority" sortBy="#{project.priority}">
+                    <h:outputText value="#{project.priority}" />
+                </p:column>
+            </p:dataTable><br/>
+        </h:form>
+        <p:growl id="growl" sticky="false" showDetail="true" life="4000"/>
+        <h:form>
+            <p:outputPanel id="disable_button">
+                <p:commandButton value="Add project" onclick="PF('project_dlg').show();" title="Add" />
+                <h:commandButton  value="Remove" disabled="#{projectBin.selectedProject == null}" actionListener="#{projectBin.removeProject()}" />
+                <p:commandButton value="Modify project" disabled="#{projectBin.selectedProject == null}" 
+                                 oncomplete="PF('modify_dlg').show();" update=":#{p:component('modify_dlg')}"/>
+            </p:outputPanel>
+        </h:form>
+    </h:body>
+</html>

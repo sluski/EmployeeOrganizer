@@ -1,0 +1,39 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui" 
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+<h:head />
+<body>
+    <ui:composition>
+        <p:dialog id="modify_dlg" dynamic="true" resizable="false" header="Modify Project" widgetVar="modify_dlg">
+            <h:form>
+                <h:panelGrid columns="2" cellpadding="4">
+                    <h:outputLabel value="Name:" />
+                    <h:inputText value="#{projectBin.selectedProject.name}" />
+                    <h:outputLabel value="Category:" />
+                    <h:inputText value="#{projectBin.selectedProject.category}" />
+                    <h:outputLabel value="Date:" />
+                    <p:calendar mindate="#{actionsPage.currentDate}" value="#{projectBin.selectedProject.term}" />
+                    <h:outputLabel value="Priority" />
+                    <p:selectOneMenu id="console" value="#{projectBin.selectedProject.priority}" style="width:125px">
+                        <f:selectItem itemLabel="Hight" itemValue="Hight" />
+                        <f:selectItem itemLabel="Medium" itemValue="Medium" />
+                        <f:selectItem itemLabel="Low" itemValue="Low" />
+                    </p:selectOneMenu>
+                    <f:facet name="footer">
+                        <center>
+                            <p:commandButton value="Modify" actionListener="#{projectBin.updateProject()}"  
+                                             update=":#{p:component('projectsTable')}, :#{p:component('modify_dlg')}, 
+                                             :#{p:component('growl')}" oncomplete="PF('modify_dlg').hide();"/>
+                            <p:commandButton type="reset" value="Reset" />
+                        </center>
+                    </f:facet>
+                </h:panelGrid>
+            </h:form>
+        </p:dialog> 
+    </ui:composition>
+</body>
+</html>

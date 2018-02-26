@@ -1,0 +1,46 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+    <h:head>
+    </h:head>
+    <h:body>
+        <h:form>
+            <h:outputStylesheet library="css" name="/style.css" />
+            <ui:include src="Dialogs/modify_dlg.xhtml" />
+            <p:growl id="employees_growl" life="4000" autoUpdate="true" showDetail="true" sticky="true" />
+            <p:dataTable id="employees_tab" var="employee" widgetVar="employees_tab" 
+                         style="padding: 10px; height: 50%" selectionMode="single" scrollable="true"
+                         value="#{employeeBin.returnAllEmployees()}" rowKey="#{employee.id}" 
+                         editable="true" selection="#{employeeBin.employee}">
+                <p:ajax event="rowSelect" update=":#{p:component('disable_button')}"/>
+                <p:column headerText="First name">
+                    <h:outputLabel value="#{employee.firstName}" />
+                </p:column>
+                <p:column headerText="Last name">
+                    <h:outputLabel value="#{employee.lastName}" />
+                </p:column>
+                <p:column headerText="Email address">
+                    <h:outputLabel value="#{employee.email}" />
+                </p:column>
+                <p:column headerText="Reward">
+                    <h:outputLabel value="#{employee.reward}" />
+                </p:column>
+                <p:column headerText="Permission:">
+                    <h:outputLabel value="#{employee.permissions}" />
+                </p:column>
+            </p:dataTable>
+            <p:outputPanel id="disable_button">
+                <p:commandButton value="Remove" disabled="#{employeeBin.employee != null}" 
+                                 actionListener="#{employeeBin.removeUser()}" oncomplete=":#{p:component('employees_tab')}"/>
+                <p:commandButton value="Modify" disabled="#{employeeBin.employee == null}" onclick="PF('modify_dlg').show();" />
+                <p:commandButton value="clear" actionListener="#{employeeBin.clearVariable()}" update="#{p:component('disable_button')}"/>
+                <p:commandButton value="update" update="#{p:component('disable_button')}" />
+            </p:outputPanel>
+            
+        </h:form>
+    </h:body>
+</html>
+

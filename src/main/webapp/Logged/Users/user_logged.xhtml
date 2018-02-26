@@ -1,0 +1,54 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+
+    <h:head>
+        <title>Welcome Test</title>
+        <style>
+            body{
+                background-color: lightskyblue;
+                margin: 0;
+                padding: 0;
+            }
+            
+            #top_menu{
+                width: 100%;
+                padding: 0;
+                margin-right: auto;
+                margin-left: auto;
+                margin-top: 0;
+                margin-bottom: 0px;
+                text-align: center;
+            }
+            
+            .navigation_buttons{
+                width: 120px; 
+                height: 45px; 
+                font-size: 23px; 
+                margin-right: 25px;
+                margin-left: 25px;
+                margin-top: 5px;
+                margin-bottom: 5px;
+            }
+        </style>    
+    </h:head>
+    <h:body onload="#{loggedUsersBin.createTimeLine()}">
+        <h:form>
+            <div id="top_menu">
+                <p:commandButton class="navigation_buttons" value="Employees" style="width: 180px;"
+                                 action="/Logged/Projects/project_logged.xhtml?faces-redirect=true" rendered="#{loggedUsersBin.loggedUser.permissions == 3}"/>
+                <p:commandButton class="navigation_buttons" value="Projects" style="width: 140px;"
+                                 action="/Logged/Projects/project_logged.xhtml?faces-redirect=true" rendered="#{loggedUsersBin.loggedUser.permissions > 1}" />
+                <p:commandButton class="navigation_buttons" value="Tasks" style="width: 110px;"
+                                 action="/Logged/Projects/project_logged.xhtml?faces-redirect=true" />
+                <p:commandButton class="navigation_buttons" value="Profil" style="width: 110px;"
+                                 action="/Logged/Projects/project_logged.xhtml?faces-redirect=true" />
+            </div>
+            <p:timeline  id="timeline" value="#{loggedUsersBin.timelineModel}" height="250px" editable="false" showCurrentTime="true" zoomable="true"
+                        style="margin-top: 20px; margin-left: 5px; margin-right: 5px;"  showNavigation="true" axisOnTop="false"/>
+        </h:form>
+    </h:body>
+</html>
+

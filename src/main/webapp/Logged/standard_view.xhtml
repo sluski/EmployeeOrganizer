@@ -1,0 +1,59 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+    <h:head>
+        <title>Employee Organizer</title>
+        <script>
+            function resizeIframe(obj) {
+                obj.style.height = obj.contentWindow.document.body.scrollHeight + 'px';
+            }
+        </script>
+    </h:head>
+    <h:body onload="if(#{employeeController.checkData()} PF('complete_dlg').show();">
+        <h:form>
+            <ui:include src="/Logged/Dialogs/complete_dlg.xhtml" />
+            <p:growl id="registration_growl" autoUpdate="true" sticky="true" life="4000" showDetail="true"/>
+            <h:outputStylesheet library="css" name="/style.css" />
+            <div id="container">
+                <div id="header">
+                    <p:link style="color: black;" href="employees.xhtml" target="content_iframe">
+                        <div class="navigation"> 
+                            <h:graphicImage class="navigation_icon" url="/resources/images/employees_icon.png" /><br/>
+                            Employees
+                        </div> 
+                    </p:link>
+                    <p:link style="color: black;" href="projects.xhtml" target="content_iframe">
+                        <div class="navigation">
+                            <h:graphicImage class="navigation_icon" url="/resources/images/projects_icon.png" /><br/>
+                            Projects
+                        </div>
+                    </p:link>
+                    <p:link style="color: black;" href="tasks.xhtml" target="content_iframe">
+                        <div class="navigation">
+                            <h:graphicImage class="navigation_icon" url="/resources/images/tasks_icon.png" /><br/>
+                            Tasks
+                        </div> 
+                    </p:link>
+                    <p:link style="color: black;" href="statistic.xhtml" target="content_iframe">
+                        <div class="navigation">
+                            <h:graphicImage class="navigation_icon" url="/resources/images/statistic_icon.png" /><br/>
+                            Statistics
+                        </div> 
+                    </p:link> 
+                    <div class="navigation" onclick="PF('registration_dlg').show();">
+                        <h:graphicImage  class="navigation_icon" url="/resources/images/login_icon.png" /><br/>
+                        Profil
+                    </div>
+                    <div id="content">
+                        <iframe frameborder="no" height="100" width="100%" scrolling="no" src="statistic.xhtml" name="content_iframe" onload="resizeIframe(this)">
+
+                        </iframe>
+                    </div>
+                </div>
+            </div>
+        </h:form>
+    </h:body>
+</html>
